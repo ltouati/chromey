@@ -269,16 +269,17 @@ impl PageInner {
     }
 
     /// Performs a mouse click event at the point's location with the amount of clicks and modifier.
-    pub async fn click_with_count(
+    pub async fn click_with_count_base(
         &self,
         point: Point,
         click_count: impl Into<i64>,
         modifiers: impl Into<i64>,
+        button: impl Into<MouseButton>,
     ) -> Result<&Self> {
         let cmd = DispatchMouseEventParams::builder()
             .x(point.x)
             .y(point.y)
-            .button(MouseButton::Left)
+            .button(button)
             .click_count(click_count)
             .modifiers(modifiers);
 
@@ -295,6 +296,61 @@ impl PageInner {
         }
 
         Ok(self)
+    }
+
+    /// Performs a mouse click event at the point's location with the amount of clicks and modifier.
+    pub async fn click_with_count(
+        &self,
+        point: Point,
+        click_count: impl Into<i64>,
+        modifiers: impl Into<i64>,
+    ) -> Result<&Self> {
+        self.click_with_count_base(point, click_count, modifiers, MouseButton::Left)
+            .await
+    }
+
+    /// Performs a mouse right click event at the point's location with the amount of clicks and modifier.
+    pub async fn right_click_with_count(
+        &self,
+        point: Point,
+        click_count: impl Into<i64>,
+        modifiers: impl Into<i64>,
+    ) -> Result<&Self> {
+        self.click_with_count_base(point, click_count, modifiers, MouseButton::Right)
+            .await
+    }
+
+    /// Performs a mouse middle click event at the point's location with the amount of clicks and modifier.
+    pub async fn middle_click_with_count(
+        &self,
+        point: Point,
+        click_count: impl Into<i64>,
+        modifiers: impl Into<i64>,
+    ) -> Result<&Self> {
+        self.click_with_count_base(point, click_count, modifiers, MouseButton::Middle)
+            .await
+    }
+
+    /// Performs a mouse back click event at the point's location with the amount of clicks and modifier.
+    pub async fn back_click_with_count(
+        &self,
+        point: Point,
+        click_count: impl Into<i64>,
+        modifiers: impl Into<i64>,
+    ) -> Result<&Self> {
+        self.click_with_count_base(point, click_count, modifiers, MouseButton::Back)
+            .await
+    }
+
+    /// Performs a mouse forward click event at the point's location with the amount of clicks and modifier.
+    pub async fn forward_click_with_count(
+        &self,
+        point: Point,
+        click_count: impl Into<i64>,
+        modifiers: impl Into<i64>,
+    ) -> Result<&Self> {
+        self.click_with_count_base(point, click_count, modifiers, MouseButton::Forward)
+            .await
     }
 
     /// Performs a click-and-drag from one point to another with optional modifiers.
@@ -355,6 +411,16 @@ impl PageInner {
         self.click_with_count(point, 2, 0).await
     }
 
+    /// Performs a mouse right click event at the point's location
+    pub async fn right_click(&self, point: Point) -> Result<&Self> {
+        self.right_click_with_count(point, 1, 0).await
+    }
+
+    /// Performs a mouse middle click event at the point's location
+    pub async fn middle_click(&self, point: Point) -> Result<&Self> {
+        self.middle_click_with_count(point, 1, 0).await
+    }
+
     /// Performs a mouse click event at the point's location and modifier: Alt=1, Ctrl=2, Meta/Command=4, Shift=8\n(default: 0).
     pub async fn click_with_modifier(
         &self,
@@ -362,6 +428,24 @@ impl PageInner {
         modifiers: impl Into<i64>,
     ) -> Result<&Self> {
         self.click_with_count(point, 1, modifiers).await
+    }
+
+    /// Performs a mouse right click event at the point's location and modifier: Alt=1, Ctrl=2, Meta/Command=4, Shift=8\n(default: 0).
+    pub async fn right_click_with_modifier(
+        &self,
+        point: Point,
+        modifiers: impl Into<i64>,
+    ) -> Result<&Self> {
+        self.right_click_with_count(point, 1, modifiers).await
+    }
+
+    /// Performs a mouse middle click event at the point's location and modifier: Alt=1, Ctrl=2, Meta/Command=4, Shift=8\n(default: 0).
+    pub async fn middle_click_with_modifier(
+        &self,
+        point: Point,
+        modifiers: impl Into<i64>,
+    ) -> Result<&Self> {
+        self.middle_click_with_count(point, 1, modifiers).await
     }
 
     /// Performs a mouse double click event at the point's location and modifier: Alt=1, Ctrl=2, Meta/Command=4, Shift=8\n(default: 0).
