@@ -1,5 +1,4 @@
 use hashbrown::HashMap;
-use reqwest::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
 use std::future::Future;
 use std::time::Duration;
 use std::{
@@ -37,13 +36,15 @@ use chromiumoxide_cdp::cdp::browser_protocol::target::{
 use chromiumoxide_cdp::cdp::{CdpEventMessage, IntoEventKind};
 use chromiumoxide_types::*;
 use spider_network_blocker::intercept_manager::NetworkInterceptManager;
+use wreq::Client;
+use wreq::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
 
 /// Default `Browser::launch` timeout in MS
 pub const LAUNCH_TIMEOUT: u64 = 20_000;
 
 lazy_static::lazy_static! {
     /// The request client to get the web socket url.
-    static ref REQUEST_CLIENT: reqwest::Client = reqwest::Client::builder()
+    static ref REQUEST_CLIENT: Client = Client::builder()
         .timeout(Duration::from_secs(60))
         .default_headers({
             let mut m = HeaderMap::new();

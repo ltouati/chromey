@@ -36,7 +36,6 @@ tokio = { version = "1", features = [
 tracing = "0.1"
 pin-project-lite = "0.2"
 dunce = "1"
-reqwest = { version = "0.12", default-features = false, features = ["json"] }
 lazy_static = "1"
 phf = { version = "0.11", features = ["macros"] }
 adblock = { version = "0.9", optional = true, default-features = false, features = [
@@ -52,6 +51,7 @@ spider_network_blocker = "0"
 spider_chromiumoxide_types = { path = "types", version = "0.7" }
 spider_chromiumoxide_cdp = { path = "cdp", version = "0.7" }
 spider_chromiumoxide_fetcher = { path = "fetcher", version = "0.7", default-features = false, optional = true }
+wreq = { version = "6.0.0-rc.21",default-features = false }
 
 [dependencies.spider_fingerprint]
 version = "2"
@@ -72,9 +72,8 @@ proc-macro2 = "1"
 chrono = "0.4"
 tracing-subscriber = "0.3"
 tokio = { version = "1", features = ["rt-multi-thread", "time", "macros"] }
-
 [features]
-default = ["bytes", "simd", "default-tls", "serde0", "auto-detect-executable"]
+default = ["bytes", "simd",  "serde0", "auto-detect-executable"]
 collect_metrics = []
 stream = ["tokio-tungstenite/stream"]
 fetcher = []
@@ -85,8 +84,6 @@ firewall = ["dep:spider_firewall"]
 firewall-default = ["firewall", "spider_firewall/default"]
 firewall-rustls = ["firewall", "spider_firewall/rustls"]
 chrome_tls_connection = ["tokio-tungstenite/native-tls"]
-default-tls = ["reqwest/default-tls"]
-rust-tls = ["reqwest/rustls-tls"]
 serde0 = ["spider_chromiumoxide_cdp/serde0"]
 auto-detect-executable = ["dep:which"]
 dynamic-versions = ["spider_fingerprint/dynamic-versions"]

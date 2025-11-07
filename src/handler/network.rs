@@ -27,13 +27,13 @@ use chromiumoxide_cdp::cdp::browser_protocol::{
 use chromiumoxide_types::{Command, Method, MethodId};
 use hashbrown::{HashMap, HashSet};
 use lazy_static::lazy_static;
-use reqwest::header::PROXY_AUTHORIZATION;
 use spider_network_blocker::intercept_manager::NetworkInterceptManager;
 pub use spider_network_blocker::scripts::{
     URL_IGNORE_SCRIPT_BASE_PATHS, URL_IGNORE_SCRIPT_STYLES_PATHS, URL_IGNORE_TRIE_PATHS,
 };
 use std::collections::VecDeque;
 use std::time::Duration;
+use wreq::header::PROXY_AUTHORIZATION;
 
 lazy_static! {
     /// General patterns for popular libraries and resources
