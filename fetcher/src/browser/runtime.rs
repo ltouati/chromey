@@ -62,11 +62,11 @@ impl BrowserFetcherRuntime {
         let mut file = tokio::io::BufWriter::new(file);
 
         // Download
-        let url = url.parse::<reqwest::Url>().context("Invalid archive url")?;
-        let mut res = reqwest::get(url)
+        let url = url.parse().context("Invalid archive url")?;
+        let mut res = wreq::get(url).send()
             .await
             .context("Failed to send request to host")?;
-        if res.status() != reqwest::StatusCode::OK {
+        if res.status() != wreq::StatusCode::OK {
             anyhow::bail!("Invalid archive url");
         }
         while let Some(chunk) = res.chunk().await.context("Failed to read response chunk")? {

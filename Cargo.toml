@@ -98,6 +98,10 @@ _fetcher-native-tokio = [
     "fetcher",
     "spider_chromiumoxide_fetcher/_native-tokio",
 ]
+_fetcher-surf = [
+    "fetcher",
+    "spider_chromiumoxide_fetcher/async-std-runtime",
+]
 
 [[example]]
 name = "wiki-tokio"

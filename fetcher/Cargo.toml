@@ -25,15 +25,15 @@ os_info = { version = "3", default-features = false }
 zip = { version = "0.6", default-features = false, features = ["deflate"] }
 async-std = { version = "1.5", features = ["unstable"], optional = true }
 tokio = { version = "1", features = ["fs"], optional = true }
-reqwest = { version = "0.12", default-features = false, optional = true }
+wreq = { version = "6.0.0-rc.21",default-features = false,optional = true }
 surf = { version = "2.3", default-features = false, optional = true }
 
 [features]
 default = ["_native-async-std"]
 async-std-runtime = ["async-std", "surf"]
-tokio-runtime = ["tokio", "reqwest"]
+tokio-runtime = ["tokio", "wreq"]
 
 _rustls-async-std = ["surf/h1-client-rustls", "async-std-runtime"]
-_rustls-tokio = ["reqwest/rustls-tls", "tokio-runtime"]
+_rustls-tokio = ["wreq", "tokio-runtime"]
 _native-async-std = ["surf/h1-client", "async-std-runtime"]
-_native-tokio = ["reqwest/native-tls", "tokio-runtime"]
+_native-tokio = ["wreq", "tokio-runtime"]
