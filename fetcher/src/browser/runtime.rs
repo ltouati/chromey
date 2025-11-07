@@ -62,7 +62,6 @@ impl BrowserFetcherRuntime {
         let mut file = tokio::io::BufWriter::new(file);
 
         // Download
-        let url = url.parse().context("Invalid archive url")?;
         let mut res = wreq::get(url).send()
             .await
             .context("Failed to send request to host")?;
